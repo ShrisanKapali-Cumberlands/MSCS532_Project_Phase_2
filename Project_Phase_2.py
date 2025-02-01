@@ -71,7 +71,7 @@ class Product:
         if price is not None and price != self.price:
             self.price = price
             # Append the new price in the price history list
-            self.price_history.append(datetime.now(), price)
+            self.price_history.append((datetime.now(), price))
         if description:
             self.description = description
         if category:
@@ -89,7 +89,7 @@ class Product:
 
     # A function to print the product class
     def __repr__(self):
-        return f"Product Id: {self.product_id}, Product Name: {self.name}, Description: {self.description}, Quantity: {self.quantity}, Category:{self.category.name}"
+        return f"Product Id: {self.product_id}, Product Price: {self.price}, Product Name: {self.name}, Description: {self.description}, Quantity: {self.quantity}, Category:{self.category.name}"
 
 
 # Finally as we now have product and category class, create Inventory class
@@ -223,7 +223,7 @@ class Inventory:
 
     # View product price history
     def get_product_price_history(self, product_id: int):
-        if product_id in self.products:
+        if product_id not in self.products:
             raise ValueError("Unable to find the product using passed in id")
 
         return self.products[product_id].price_history
@@ -249,7 +249,7 @@ class Inventory:
         return [
             product
             for product in self.products.values()
-            if product.category.id == category_id
+            if product.category.category_id == category_id
         ]
 
     # Search product by category name
@@ -546,3 +546,117 @@ print("")
 print("##########################################")
 print("Current inventory status")
 print(inventory)
+
+
+print("")
+print("##########################################")
+print("Testing the functions")
+
+print("")
+print("##########################################")
+print("Test for class Category")
+print("##########################################")
+print("Updating category 1 name from Vegetables to Produce")
+print("Before Update: ", inventory.categories[1])
+start_time = time.time()
+inventory.update_category(1, "Produce")
+end_time = time.time()
+exec_time = end_time - start_time
+print("After Update: ", inventory.categories[1])
+print(f"Update took about {exec_time} seconds")
+
+print("")
+print("Adding a new category with id 10")
+inventory.add_new_category(10, "Electronics", True)
+print("\nUpdated categories list")
+for i in range(len(inventory.categories)):
+    print(inventory.categories[i + 1])
+
+print("\nFind the category by name - produce")
+start_time = time.time()
+categories = inventory.search_category_by_name("Produce")
+end_time = time.time()
+exec_time = end_time - start_time
+print(f"Categories found {list(categories)} in {exec_time} seconds")
+
+print("\nDeleting category - electornic")
+print(
+    f"Before delete using search to find electronics - {inventory.search_category_by_name("Electronics")}"
+)
+start_time = time.time()
+inventory.delete_category(10)
+end_time = time.time()
+print(
+    f"After delete using search to find electronics - {inventory.search_category_by_name("Electronics")}"
+)
+print("##########################################")
+
+print("\n\n##########################################")
+print("Test for class Products")
+print("##########################################")
+
+print("Updating product 1 price from 1.49 to 1.99")
+print("Before Update: ", inventory.products[1])
+start_time = time.time()
+inventory.update_product(1, None, 1.99, None, None, None)
+end_time = time.time()
+exec_time = end_time - start_time
+print("After Update: ", inventory.products[1])
+print(f"Update took about {exec_time} seconds")
+
+print("\nIncrease the quanity of product id 1 by 25")
+start_time = time.time()
+inventory.increase_product_quantity(1, 25)
+end_time = time.time()
+exec_time = end_time - start_time
+print("After Update: ", inventory.products[1])
+print(f"Update took about {exec_time} seconds")
+
+print("\nDecrease the quanity of product id 1 by 5")
+start_time = time.time()
+inventory.decrease_product_quantity(1, 5)
+end_time = time.time()
+exec_time = end_time - start_time
+print("After Update: ", inventory.products[1])
+print(f"Update took about {exec_time} seconds")
+
+print("\nGet product price history")
+start_time = time.time()
+priceHistory = inventory.get_product_price_history(1)
+end_time = time.time()
+exec_time = end_time - start_time
+print("Price History of product 1: ", priceHistory)
+print(f"Extraction took about {exec_time} seconds")
+
+print("\nSearch product by name")
+start_time = time.time()
+products = inventory.search_product_by_name("mustard greens")
+end_time = time.time()
+exec_time = end_time - start_time
+print("Searching for product with name mustard greens: ", products)
+print(f"Extraction took about {exec_time} seconds")
+
+print("\nSearch product by price range")
+start_time = time.time()
+products = inventory.search_product_by_price_range(5.99, 10.99)
+end_time = time.time()
+exec_time = end_time - start_time
+print("Searching for product with within price range 5.99-10.99: ", products)
+print(f"Extraction took about {exec_time} seconds")
+
+print("\nSearch product by category id")
+start_time = time.time()
+products = inventory.search_product_by_category_id(1)
+end_time = time.time()
+exec_time = end_time - start_time
+print("Searching for product with category 1 ", products)
+print(f"Extraction took about {exec_time} seconds")
+
+print("\nSearch product by category name produce")
+start_time = time.time()
+products = inventory.search_product_by_category_name("produce")
+end_time = time.time()
+exec_time = end_time - start_time
+print("Searching for product with category 1 ", products)
+print(f"Extraction took about {exec_time} seconds")
+print("##########################################")
