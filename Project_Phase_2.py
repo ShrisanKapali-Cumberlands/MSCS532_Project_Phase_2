@@ -8,6 +8,7 @@
 ## Dyanamic Inventory Management System
 ## This program will allow end users to perform CRUD operations on products and categories
 from datetime import datetime
+import time
 
 
 # Defining the class Category
@@ -261,4 +262,287 @@ class Inventory:
 
     # Finally a product to print the inventory class
     def __repr__(self):
-        return f"Inventory(Categories:{list(self.categories.values())}, Products:{list:(self.products.values())})"
+        return f"Inventory Details \nCategories:{list(self.categories.values())}, \n\nProducts:{list(self.products.values())})"
+
+
+## ************************************* ##
+## Test Cases
+## ************************************* ##
+
+# Building the inventory class
+inventory = Inventory()
+print("##########################################")
+print("Initializing the Grocery Store Inventory")
+print("##########################################")
+
+# Loading categories to the inventory
+print("")
+print("##########################################")
+print("Loading categories to the inventory ...")
+# Creating a list of categories to be loaded
+categoriesList = [
+    {"id": 1, "name": "Vegetables", "status": True},
+    {"id": 2, "name": "Diary", "status": True},
+    {"id": 3, "name": "Meat", "status": True},
+    {"id": 4, "name": "Bakery", "status": True},
+    {"id": 5, "name": "Liquor", "status": True},
+    {"id": 6, "name": "Drinks", "status": True},
+    {"id": 7, "name": "Cleaning", "status": True},
+    {"id": 8, "name": "Health", "status": True},
+    {"id": 9, "name": "House", "status": True},
+]
+# A variable to store category addition execution times
+loadingCategoryExecutionTimes = []
+
+print("Loading categories ")
+for category in categoriesList:
+    # Calculating the execution time to load
+    start_time = time.time()
+    inventory.add_new_category(category["id"], category["name"], category["status"])
+    end_time = time.time()
+    exec_time = end_time - start_time
+    # Add this execution times to a list
+    loadingCategoryExecutionTimes.append(
+        {"categoryId": category["id"], "execution_time": exec_time}
+    )
+    print(
+        f"Category with Id: {category['id']}, Name: {category['name']}, Status: {category['status']} loaded in {exec_time} seconds"
+    )
+
+print("##########################################")
+print("")
+print("##########################################")
+print("Loading products to the inventory")
+
+productsList = [
+    # Products for category vegetables (1)
+    {
+        "id": 1,
+        "name": "Mustard Greens Spinach",
+        "price": 1.49,
+        "description": "Spinach",
+        "category": 1,
+        "quantity": 100,
+    },
+    {
+        "id": 2,
+        "name": "Caluliflower",
+        "price": 3.50,
+        "description": "Per piece",
+        "category": 1,
+        "quantity": 50,
+    },
+    {
+        "id": 3,
+        "name": "Potato",
+        "price": 5.50,
+        "description": "5 lb bag",
+        "category": 1,
+        "quantity": 80,
+    },
+    {
+        "id": 4,
+        "name": "Coriander",
+        "price": 0.50,
+        "description": "Per piece",
+        "category": 1,
+        "quantity": 200,
+    },
+    # Products for category Diary (2)
+    {
+        "id": 5,
+        "name": "Whole Milk",
+        "price": 3.99,
+        "description": "Per piece",
+        "category": 2,
+        "quantity": 20,
+    },
+    {
+        "id": 6,
+        "name": "Eggnog",
+        "price": 4.99,
+        "description": "Per piece",
+        "category": 2,
+        "quantity": 10,
+    },
+    {
+        "id": 7,
+        "name": "Greek Yogurt",
+        "price": 5.99,
+        "description": "Per piece",
+        "category": 2,
+        "quantity": 30,
+    },
+    # Products for category Meat (3)
+    {
+        "id": 8,
+        "name": "Chicken Breast",
+        "price": 15.99,
+        "description": "3.99 per lbs",
+        "category": 3,
+        "quantity": 8,
+    },
+    {
+        "id": 9,
+        "name": "Chicken Leg Quarter",
+        "price": 6.99,
+        "description": "1.99 per lbs",
+        "category": 3,
+        "quantity": 12,
+    },
+    {
+        "id": 10,
+        "name": "Chicken Thigh",
+        "price": 10.99,
+        "description": "2.99 per lbs",
+        "category": 3,
+        "quantity": 15,
+    },
+    # Products for category Bakery (4)
+    {
+        "id": 11,
+        "name": "White Bread",
+        "price": 3.99,
+        "description": "Per piece",
+        "category": 4,
+        "quantity": 15,
+    },
+    {
+        "id": 12,
+        "name": "Bagel",
+        "price": 5.99,
+        "description": "Per Packet 4 pcs",
+        "category": 4,
+        "quantity": 7,
+    },
+    # Products for category Liquor (5)
+    {
+        "id": 13,
+        "name": "Corona Beer",
+        "price": 10.99,
+        "description": "4 cans",
+        "category": 5,
+        "quantity": 10,
+    },
+    {
+        "id": 14,
+        "name": "Hennessy",
+        "price": 80.99,
+        "description": "750 ml",
+        "category": 5,
+        "quantity": 10,
+    },
+    # Products for category Drinks (6)
+    {
+        "id": 15,
+        "name": "Coke",
+        "price": 1.99,
+        "description": "1 L",
+        "category": 6,
+        "quantity": 10,
+    },
+    {
+        "id": 16,
+        "name": "Fanta",
+        "price": 1.99,
+        "description": "1 L",
+        "category": 6,
+        "quantity": 13,
+    },
+    {
+        "id": 17,
+        "name": "Diet Coke",
+        "price": 2.50,
+        "description": "1 L",
+        "category": 6,
+        "quantity": 20,
+    },
+    {
+        "id": 18,
+        "name": "Diet Fanta",
+        "price": 3.50,
+        "description": "1 L",
+        "category": 6,
+        "quantity": 25,
+    },
+    # Products for category Cleaning (7)
+    {
+        "id": 19,
+        "name": "Dish Wash Liquid",
+        "price": 3.50,
+        "description": "500 ml",
+        "category": 7,
+        "quantity": 10,
+    },
+    {
+        "id": 20,
+        "name": "Dish Wash Scrub",
+        "price": 1.50,
+        "description": "Per piece",
+        "category": 7,
+        "quantity": 40,
+    },
+    # Products for category Health (8)
+    {
+        "id": 21,
+        "name": "Toothpaste",
+        "price": 2.50,
+        "description": "Per piece",
+        "category": 8,
+        "quantity": 20,
+    },
+    {
+        "id": 22,
+        "name": "Toothbrush",
+        "price": 4.50,
+        "description": "Per piece",
+        "category": 8,
+        "quantity": 25,
+    },
+    # Products for category House (9)
+    {
+        "id": 23,
+        "name": "Carpet Cleaner",
+        "price": 5.50,
+        "description": "Per piece",
+        "category": 9,
+        "quantity": 5,
+    },
+    {
+        "id": 24,
+        "name": "Mop",
+        "price": 14.50,
+        "description": "Per piece",
+        "category": 9,
+        "quantity": 2,
+    },
+]
+
+# A variable to store product addition execution times
+loadingProductsExecutionTimes = []
+for product in productsList:
+    # Calculating the execution time to load
+    start_time = time.time()
+    inventory.add_product(
+        product["id"],
+        product["name"],
+        product["price"],
+        product["description"],
+        product["category"],
+        product["quantity"],
+    )
+    end_time = time.time()
+    exec_time = end_time - start_time
+    # Add this execution times to a list
+    loadingProductsExecutionTimes.append(
+        {"product_id": product["id"], "execution_time": exec_time}
+    )
+    print(
+        f"Product with Id: {product['id']}, Name: {product['name']} loaded in {exec_time} seconds"
+    )
+print("##########################################")
+
+print("")
+print("##########################################")
+print("Current inventory status")
+print(inventory)
